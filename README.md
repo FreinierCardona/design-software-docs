@@ -16,7 +16,7 @@ Este repositorio es la fuente de verdad documental del proyecto. Todo cambio deb
 
 | Sección | Descripción | Estado |
 |---------|-------------|--------|
-| [00-governance](./00-governance/) | Reglas, convenciones y criterios del repo | 🟡 |
+| [00-governance](./00-governance/) | Reglas, convenciones y criterios del repo | 🟢 |
 | [01-context](./01-context/) | Contexto institucional, alcance y glosario | 🔴 |
 | [02-domain](./02-domain/) | Modelo de dominio y bounded contexts | 🔴 |
 | [03-product](./03-product/) | Visión, roadmap y backlog de producto | 🔴 |
