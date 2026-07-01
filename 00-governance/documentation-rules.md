@@ -1,121 +1,342 @@
-# Reglas de documentación
+# Reglas de Documentación
 
-> Estado: 🟡 En progreso | Última actualización: 2026-06-16
-> Autor: Por definir | Equipo: Por definir
+> Estado: 🟢 Aprobado |
+> Última actualización: 2026-06-23 |
+> Autor: Equipo de Arquitectura |
+> Equipo: Sistema de Gestión de Horarios SENA |
 
-Este documento define las reglas generales para crear, nombrar, enlazar y mantener documentos. Para ramas y commits, ver [git-conventions.md](./git-conventions.md). Para seguridad, ver [security-rules.md](./security-rules.md).
+---
 
-## Naming
+# Objetivo
 
-### Archivos
+Definir las reglas y estándares para la creación, organización, mantenimiento y evolución de la documentación oficial del proyecto.
 
-- Usar `kebab-case.md`.
-- Usar nombres descriptivos: `data-model.md`, `api-contract.md`, `migration-strategy.md`.
-- No usar espacios, `snake_case`, `PascalCase` ni nombres genéricos como `documento1.md`.
+Estas reglas buscan garantizar:
 
-### Carpetas
+* Consistencia entre documentos.
+* Facilidad de navegación.
+* Trazabilidad de cambios.
+* Calidad documental.
+* Escalabilidad del repositorio.
+* Transferencia efectiva de conocimiento entre integrantes del equipo.
 
-- Las carpetas raíz usan prefijo numérico: `NN-nombre`.
-- No crear carpetas raíz nuevas sin aprobación de arquitectura.
-- Toda carpeta nueva debe tener `README.md`.
+---
 
-### ADRs
+# Alcance
 
-- Formato: `ADR-NNN-titulo-corto.md`.
-- Los ADRs viven en `05-architecture/decisions/records/`.
-- Ver proceso completo en [05-architecture/decisions/README.md](../05-architecture/decisions/README.md).
+Estas reglas aplican a:
 
-## Estructura mínima
+* Arquitectura.
+* Reglas de negocio.
+* Historias de usuario.
+* Modelos de datos.
+* APIs.
+* Diagramas.
+* ADRs.
+* Microservicios.
+* Infraestructura.
+* Seguridad.
+* Gobernanza.
+* Cualquier otro documento almacenado dentro del repositorio.
 
-Todo documento `.md` debe iniciar con:
+---
+
+# Convenciones de nombres
+
+## Archivos
+
+Todos los archivos Markdown deben utilizar:
+
+```text
+kebab-case.md
+```
+
+### Correcto
+
+```text
+data-model.md
+api-contract.md
+business-rules.md
+microservice-catalog.md
+```
+
+### Incorrecto
+
+```text
+DataModel.md
+data_model.md
+Documento Final.md
+archivo1.md
+```
+
+### Reglas
+
+* Utilizar únicamente letras minúsculas.
+* Separar palabras mediante guiones (`-`).
+* No utilizar espacios.
+* No utilizar caracteres especiales.
+* El nombre debe describir claramente el contenido.
+
+---
+
+## Carpetas
+
+Las carpetas raíz del repositorio utilizan el formato:
+
+```text
+NN-nombre-seccion
+```
+
+### Ejemplos
+
+```text
+00-governance
+01-product
+05-architecture
+08-uml
+09-microservices
+```
+
+### Reglas
+
+* No crear carpetas raíz sin aprobación del equipo de arquitectura.
+* Toda carpeta debe contener un `README.md`.
+* Los nombres deben ser descriptivos y permanentes.
+* No utilizar carpetas temporales.
+
+### Prohibido
+
+```text
+otros
+temp
+misc
+pruebas
+nueva-carpeta
+```
+
+---
+
+# Estructura mínima obligatoria
+
+Todo documento debe iniciar con la siguiente estructura:
 
 ```markdown
 # Título descriptivo
 
-> Estado: 🔴 Pendiente | Última actualización: YYYY-MM-DD
-> Autor: Nombre Apellido | Equipo: <nombre del equipo>
+> Estado: 🔴 Borrador
+> Última actualización: YYYY-MM-DD
+> Autor: Nombre o Equipo Responsable
 
-## Contexto
+---
 
-## Contenido
+# Objetivo
 
-## Referencias
+# Alcance
+
+# Contenido
+
+# Referencias
 ```
 
-## Estados
+---
 
-| Estado | Uso |
-|--------|-----|
-| 🔴 Pendiente | Archivo creado, sin contenido validado |
-| 🟡 En progreso | Contenido parcial o en revisión |
-| 🟢 Estable | Revisado, aprobado y vigente |
-| ⚫ Deprecado | Ya no aplica. Ver criterio de acción abajo. |
+# Estados documentales
 
-**Criterio para documentos deprecados:**
+| Estado         | Descripción                               |
+| -------------- | ----------------------------------------- |
+| 🔴 Borrador    | Documento en construcción inicial.        |
+| 🟡 En revisión | Documento sometido a validación.          |
+| 🟢 Aprobado    | Documento validado y considerado oficial. |
+| ⚫ Obsoleto     | Documento reemplazado o retirado.         |
 
-| Situación | Acción |
-|-----------|--------|
-| Documento sustituido por otro | Cambiar estado a ⚫, agregar `> Reemplazado por: [enlace al nuevo]` al inicio, dejar en su ubicación actual |
-| Documento de sección eliminada o reestructurada | Mover a `99-archive/deprecated/`, registrar el movimiento en `CHANGELOG.md` |
-| ADR obsoleta | Nunca mover — cambiar estado a `DEPRECATED` en `records/` y agregar `> Reemplazada por: ADR-NNN-nueva.md` |
+---
 
-Un documento pasa a 🟢 solo después de revisión por una persona distinta al autor.
+# Gestión de documentos obsoletos
 
-## Índices obligatorios
+## Documento reemplazado
 
-- Todo archivo nuevo debe enlazarse desde el `README.md` de su carpeta.
-- Toda carpeta nueva debe tener `README.md`.
-- Los documentos movidos deben conservar trazabilidad mediante enlace o nota en `CHANGELOG.md`.
-- Los ADRs se registran en `05-architecture/decisions/README.md`.
-- Los microservicios se registran en `09-microservices/service-catalog.md`.
+Cuando un documento sea sustituido:
 
-## Documentos y carpetas
-
-### Documento nuevo
-
-1. Verificar que no exista en otra sección.
-2. Crear el archivo en la sección correcta.
-3. Usar la estructura mínima.
-4. Enlazarlo desde el `README.md` de la sección.
-5. Abrir PR con checklist completo.
-
-### Carpeta nueva
-
-Crear una subcarpeta solo cuando:
-
-- Agrupa varios documentos del mismo subtema.
-- Tiene ciclo de vida propio.
-- Facilita navegación frecuente para varios equipos.
-
-No crear carpetas `misc/`, `otros/`, `temp/` ni carpetas con un solo documento.
-
-## Diagramas y recursos visuales
-
-| Tipo de recurso | Dónde va |
-|----------------|----------|
-| Fuentes UML `.wsd` / `.puml` | `08-uml/diagrams/source/` |
-| Exportaciones UML `.svg` / `.png` | `08-uml/diagrams/exports/` |
-| Logos | `assets/logos/` |
-| Capturas, mockups o imágenes no UML | `assets/images/` |
-| Diagramas UML referenciados por arquitectura | Fuente y export en `08-uml/`, enlace desde `05-architecture/` |
+```markdown
+> Reemplazado por: [nuevo-documento.md](../ruta)
+```
 
 Reglas:
 
-- Todo diagrama debe tener fuente editable.
-- SVG es preferido sobre PNG.
-- No subir solo la imagen exportada si existe fuente editable.
-- Registrar diagramas en `08-uml/diagram-index.md`.
+* Mantener el documento original.
+* Cambiar estado a ⚫ Obsoleto.
+* Mantener trazabilidad histórica.
 
-## Errores comunes
+---
 
-| Error | Consecuencia | Solución |
-|-------|-------------|----------|
-| Crear archivo sin registrarlo en el índice | Documento invisible | Enlazar en el `README.md` de la sección |
-| Subir solo una exportación de diagrama | No se puede editar después | Subir fuente + exportación |
-| Duplicar contenido entre secciones | Pérdida de fuente de verdad | Enlazar al documento canónico |
-| Crear carpeta genérica | Navegación confusa | Usar nombres descriptivos |
-| Eliminar historia documental | Pérdida de trazabilidad | Deprecar o archivar |
+## Documento eliminado por reestructuración
 
-## Revisión
+Acciones requeridas:
 
-Para saber si un documento está listo para PR, usar [definition-of-ready.md](./definition-of-ready.md). Para cierre, usar [definition-of-done.md](./definition-of-done.md).
+1. Mover a:
+
+```text
+99-archive/deprecated/
+```
+
+2. Registrar movimiento en:
+
+```text
+CHANGELOG.md
+```
+
+3. Actualizar enlaces afectados.
+
+---
+
+## ADR obsoleta
+
+Las ADRs nunca deben eliminarse.
+
+Acciones requeridas:
+
+* Mantener en su ubicación original.
+* Cambiar estado a Obsoleto.
+* Referenciar la ADR que la reemplaza.
+
+Ejemplo:
+
+```markdown
+> Reemplazada por: ADR-015-service-boundaries.md
+```
+
+---
+
+# Índices obligatorios
+
+Todo documento nuevo debe estar registrado en su índice correspondiente.
+
+| Tipo                  | Ubicación                  |
+| --------------------- | -------------------------- |
+| Documentación general | README de la sección       |
+| ADRs                  | architecture/decisions     |
+| Diagramas             | diagram-index.md           |
+| Microservicios        | service-catalog.md         |
+| APIs                  | api-catalog.md (si aplica) |
+
+---
+
+# Creación de documentos
+
+## Documento nuevo
+
+Antes de crear un documento:
+
+1. Verificar que no exista documentación equivalente.
+2. Identificar la sección correcta.
+3. Crear el archivo siguiendo la plantilla oficial.
+4. Registrar el documento en el índice correspondiente.
+5. Validar mediante Definition of Ready.
+6. Crear Pull Request.
+
+---
+
+## Carpeta nueva
+
+Una carpeta nueva solamente podrá crearse cuando:
+
+* Agrupe múltiples documentos relacionados.
+* Posea una responsabilidad clara.
+* Facilite la navegación del repositorio.
+* Tenga crecimiento previsto.
+
+No crear carpetas para almacenar un único documento.
+
+---
+
+# Diagramas y recursos visuales
+
+## Ubicaciones oficiales
+
+| Recurso                | Ubicación                  |
+| ---------------------- | -------------------------- |
+| PlantUML / fuentes UML | `08-uml/diagrams/source/`  |
+| Exportaciones SVG      | `08-uml/diagrams/exports/` |
+| Imágenes generales     | `assets/images/`           |
+| Logos                  | `assets/logos/`            |
+
+---
+
+## Reglas para diagramas
+
+* Todo diagrama debe poseer fuente editable.
+* SVG es el formato preferido.
+* No subir únicamente exportaciones.
+* Todo diagrama debe registrarse en:
+
+```text
+08-uml/diagram-index.md
+```
+
+* Los diagramas utilizados por arquitectura deben estar enlazados desde los documentos correspondientes.
+
+---
+
+# Flujo documental
+
+Todo documento deberá seguir el siguiente flujo:
+
+```text
+Borrador
+   ↓
+Ready
+   ↓
+Pull Request
+   ↓
+Revisión
+   ↓
+Aprobado
+```
+
+Validado mediante:
+
+* Definition of Ready
+* Definition of Done
+
+---
+
+# Estrategia de ramas
+
+La documentación deberá respetar la estrategia oficial del proyecto:
+
+```text
+main      → Producción
+staging   → Preproducción
+qa        → Validación funcional y técnica
+develop   → Desarrollo e integración
+```
+
+Ningún documento deberá llegar a `main` sin haber pasado previamente por los procesos de revisión definidos para `develop`, `qa` y `staging`.
+
+---
+
+# Errores comunes
+
+| Error                    | Impacto                     | Acción Correctiva     |
+| ------------------------ | --------------------------- | --------------------- |
+| Documento sin índice     | Invisible para el equipo    | Registrar en README   |
+| Enlaces rotos            | Navegación incorrecta       | Corregir referencias  |
+| Diagramas sin fuente     | Difícil mantenimiento       | Subir fuente editable |
+| Contenido duplicado      | Múltiples fuentes de verdad | Consolidar documento  |
+| Carpetas genéricas       | Desorganización             | Reestructurar         |
+| Eliminación de historial | Pérdida de trazabilidad     | Archivar o deprecar   |
+
+---
+
+# Referencias
+
+* `definition-of-ready.md`
+* `definition-of-done.md`
+* `git-conventions.md`
+* `security-rules.md`
+
+---
+
+# Regla general
+
+> Todo documento almacenado en este repositorio se considera documentación oficial del Sistema de Gestión de Horarios SENA y deberá cumplir obligatoriamente las reglas definidas en este documento.

@@ -1,164 +1,500 @@
 # Convenciones de Git
 
-> Estado: 🟡 En progreso | Última actualización: 2026-06-16
-> Autor: Por definir | Equipo: Por definir
+> Estado: 🟢 Aprobado |
+> Última actualización: 2026-06-23 |
+> Autor: Equipo de Arquitectura |
+> Equipo: Sistema de Gestión de Horarios SENA
 
-Este repositorio usa ramas protegidas, Pull Requests y Conventional Commits para mantener trazabilidad documental.
+---
 
-## Ramas protegidas
+# Objetivo
 
-`dev`, `qa` y `main` representan ambientes padre y no se trabajan directamente.
+Definir las reglas, convenciones y flujo de trabajo que deben seguir todos los integrantes del proyecto para garantizar trazabilidad, control de cambios, colaboración organizada y promoción segura de la documentación a través de los diferentes ambientes.
 
-| Rama | Propósito | Regla |
-|------|-----------|-------|
-| `dev` | Integración de trabajo en desarrollo | Recibe PRs desde ramas hijas |
-| `qa` | Validación funcional y técnica | Recibe PRs o cherry-picks aprobados desde `dev` |
-| `main` | Producción / documentación estable | Recibe solo PRs desde `release/*` |
+---
 
-## Ramas documentales
+# Alcance
 
-| Tipo de rama | Cuándo usarla | Ejemplo | Tipo de commit |
-|--------------|---------------|---------|----------------|
-| `feat` | Documento nuevo | `feat/doc-api-guidelines` | `docs` |
-| `fix` | Corrección de contenido | `fix/doc-scope` | `fix` |
-| `chore` | Reorganización o renombrado | `chore/doc-move-adr-003` | `chore` |
-| `docs` | Actualización de documento existente | `docs/doc-service-catalog` | `docs` |
+Estas convenciones aplican a:
 
-El tipo de rama describe intención. El tipo del commit sigue Conventional Commits.
+* Repositorio de documentación.
+* Historias de Usuario (HU).
+* Arquitectura.
+* Diagramas.
+* Reglas de negocio.
+* Catálogo de microservicios.
+* ADRs.
+* Contratos de API.
+* Cualquier documento almacenado dentro del repositorio.
 
-## Ramas por historia de usuario
+---
 
-| Caso | Rama base | Formato | Ejemplo |
-|------|-----------|---------|---------|
-| Desarrollo de HU | `dev` | `hu-<numero>-dev` | `hu-01-dev` |
-| Ajuste o validación QA | `qa` | `hu-<numero>-qa` | `hu-01-qa` |
-| Release de iteración | `main` | `release/<iteracion>` | `release/iteration-01` |
+# Estrategia de ramas
 
-Las ramas `hu-*` son un caso especial para trazabilidad por historia. No siguen el formato `<tipo>/doc-*`.
+El proyecto utiliza una estrategia de promoción por ambientes basada en cuatro ramas padre permanentes.
 
-## Flujo hacia dev
+| Rama      | Ambiente      | Propósito                                        |
+| --------- | ------------- | ------------------------------------------------ |
+| `develop` | Desarrollo    | Integración continua de cambios en construcción. |
+| `qa`      | Calidad       | Validación funcional y técnica.                  |
+| `staging` | Preproducción | Validación final antes de liberar cambios.       |
+| `main`    | Producción    | Fuente oficial y estable de documentación.       |
 
-```bash
-git checkout dev
-git pull origin dev
-git checkout -b hu-01-dev
+---
 
-git add <archivos>
-git commit -m "docs(04-requirements): add scheduling availability user story"
-git push origin hu-01-dev
+## Reglas de las ramas padre
+
+Las siguientes ramas son consideradas ramas protegidas:
+
+```text
+develop
+qa
+staging
+main
 ```
 
-Abrir PR de `hu-01-dev` hacia `dev`.
+Reglas:
 
-## Flujo hacia qa
+* No se realizan commits directos.
+* No se realizan pushes directos.
+* Todo cambio debe ingresar mediante Pull Request.
+* Toda promoción debe seguir el flujo oficial.
+* Las ramas padre deben permanecer estables y actualizadas.
 
-Crear rama hija desde `qa`:
+---
+
+# Flujo oficial de promoción
+
+```text
+Rama de Trabajo de develop
+       ↓
+develop
+       ↓
+Rama de revision de qa
+       ↓
+qa
+       ↓
+Rama de revision de staging
+       ↓
+staging
+       ↓
+release iteration main
+       ↓
+main
+```
+
+Todo cambio deberá pasar obligatoriamente por cada ambiente antes de llegar a producción.
+
+---
+
+# Ramas de Historia de Usuario
+
+Cada Historia de Usuario deberá desarrollarse en una rama independiente.
+
+## Formato
+
+```text
+hu-<numero>-<nombre-rama>-<descripcion-corta>
+```
+
+## Ejemplos
+
+```text
+hu-01-develop-project-governance-framework
+hu-01-qa-project-context
+hu-01-staging-git-conventions
+hu-01-main-architecture-foundation
+```
+
+## Reglas
+
+* Deben crearse desde `develop`.
+* Deben representar una única Historia de Usuario.
+* Deben mantenerse pequeñas y trazables.
+* No deben mezclar cambios de múltiples historias.
+
+---
+
+# Creación de una rama de Historia de Usuario
+
+```bash
+git checkout develop
+git pull origin develop
+
+git checkout -b hu-01-develop-project-governance-framework
+```
+
+Verificar la rama actual:
+
+```bash
+git branch
+```
+
+---
+
+# Trabajo sobre la Historia de Usuario
+
+Agregar cambios:
+
+```bash
+git add .
+```
+
+Crear commit:
+
+```bash
+git commit -m "docs(00-governance): add governance repository structure"
+```
+
+Publicar rama:
+
+```bash
+git push origin hu-01-develop-project-governance-framework
+```
+
+---
+
+# Pull Request hacia Develop
+
+Una vez finalizada la HU:
+
+```text
+hu-01-develop-project-governance-framework
+            ↓
+develop
+```
+
+Proceso:
+
+1. Crear Pull Request.
+2. Asociar la Historia de Usuario.
+3. Validar Definition of Ready.
+4. Revisar contenido.
+5. Aprobar Pull Request.
+6. Realizar Merge.
+
+---
+
+# Promoción hacia QA
+
+Cuando la Historia de Usuario ha sido aprobada en desarrollo.
+
+## Opción 1 - Promoción completa
+
+Cuando toda la HU debe avanzar:
 
 ```bash
 git checkout qa
 git pull origin qa
-git checkout -b hu-01-qa
+
+git merge origin/develop
+
+git push origin qa
 ```
 
-Llevar cambios con merge cuando la HU completa pasa igual:
+---
+
+## Opción 2 - Promoción selectiva
+
+Cuando únicamente algunos commits deben avanzar:
 
 ```bash
-git merge origin/hu-01-dev
-git push origin hu-01-qa
-```
+git checkout qa
 
-O con cherry-pick cuando solo pasan commits específicos:
-
-```bash
 git cherry-pick <commit-sha>
-git push origin hu-01-qa
+
+git push origin qa
 ```
 
-Abrir PR de `hu-01-qa` hacia `qa`.
+### Cuándo usar Cherry Pick
 
-## Release hacia main
+* Correcciones puntuales.
+* HUs parcialmente aprobadas.
+* Promociones selectivas.
+* Hotfixes.
 
-`main` representa documentación estable. Para producción, crear una rama release desde `main`:
+---
+
+# Promoción hacia Staging
+
+Una vez aprobados los cambios en QA.
+
+## Promoción completa
 
 ```bash
-git checkout main
-git pull origin main
+git checkout staging
+git pull origin staging
+
+git merge origin/qa
+
+git push origin staging
+```
+
+---
+
+## Promoción selectiva
+
+```bash
+git checkout staging
+
+git cherry-pick <commit-sha>
+
+git push origin staging
+```
+
+---
+
+# Release hacia Producción
+
+Cuando una iteración está lista para liberarse.
+
+## Crear rama Release
+
+```bash
+git checkout staging
+git pull origin staging
+
 git checkout -b release/iteration-01
 ```
 
-La rama release puede acumular varias HUs de una iteración:
+---
+
+## Agregar cambios específicos
 
 ```bash
 git cherry-pick <commit-hu-01>
 git cherry-pick <commit-hu-02>
 git cherry-pick <commit-hu-03>
+```
+
+---
+
+## Publicar Release
+
+```bash
 git push origin release/iteration-01
 ```
 
-Abrir PR de `release/iteration-01` hacia `main`.
+---
 
-## Conventional Commits
-
-Formato obligatorio:
+## Pull Request a Main
 
 ```text
-<type>(NN-section): short description in English
+release/iteration-01
+            ↓
+main
 ```
 
-Tipos permitidos:
+La rama release permite consolidar varias Historias de Usuario dentro de una misma liberación.
 
-| Tipo | Uso |
-|------|-----|
-| `docs` | Crear o actualizar documentación |
-| `fix` | Corregir contenido incorrecto |
-| `chore` | Mover, renombrar, reordenar o actualizar metadatos |
-| `refactor` | Reestructurar documentación sin cambiar significado |
+---
 
-No usar `feat`, `style`, `test`, `perf`, `build` ni `ci` para commits de este repositorio documental.
+# Hotfix
 
-Ejemplos:
+Un Hotfix se utiliza únicamente para corregir errores críticos detectados en producción.
 
-```bash
-docs(04-requirements): add scheduling user stories
-docs(09-microservices): register auth service
-fix(01-context): clarify project scope
-chore(08-uml): export sequence diagrams to SVG
-refactor(00-governance): split contribution rules by topic
+## Formato
+
+```text
+hotfix/<descripcion>
 ```
 
-## Reglas de commits
+## Ejemplo
 
-- La descripción del commit va en inglés.
-- El contenido de los documentos puede estar en español.
-- Los commits deben ser pequeños y trazables.
-- Si se documentan varios microservicios, usar un commit por microservicio cuando sea posible.
-- No mezclar cambios funcionales de varias secciones sin razón clara.
+```text
+hotfix/broken-navigation-links
+```
 
-## Hotfix en main
+---
 
-Cuando se detecta un error crítico en `main` que no puede esperar el flujo normal de release:
-
-| Caso | Rama base | Formato | Ejemplo |
-|------|-----------|---------|---------|
-| Corrección urgente en documentación estable | `main` | `fix/doc-<descripcion>` | `fix/doc-broken-api-contract` |
-
-Flujo:
+## Crear Hotfix
 
 ```bash
 git checkout main
 git pull origin main
-git checkout -b fix/doc-broken-api-contract
 
-git add <archivos>
-git commit -m "fix(07-api): correct broken endpoint reference in contract"
-git push origin fix/doc-broken-api-contract
+git checkout -b hotfix/broken-navigation-links
 ```
 
-Abrir PR directo de `fix/doc-*` hacia `main`. Una vez mergeado, aplicar el mismo fix a `qa` y `dev` con cherry-pick:
+---
+
+## Aplicar corrección
 
 ```bash
-git checkout qa
-git pull origin qa
-git cherry-pick <commit-sha>
-git push origin qa
+git add .
+
+git commit -m "fix(00-governance): correct broken navigation links"
+
+git push origin hotfix/broken-navigation-links
 ```
+
+---
+
+## Pull Request
+
+```text
+hotfix/broken-navigation-links
+                ↓
+main
+```
+
+---
+
+## Sincronización posterior
+
+Después de aprobar el Hotfix en producción:
+
+```text
+main
+ ↓
+staging
+ ↓
+qa
+ ↓
+develop
+```
+
+Esto evita divergencias entre ambientes.
+
+---
+
+# Conventional Commits
+
+Todos los commits deben seguir el estándar Conventional Commits.
+
+## Formato obligatorio
+
+```text
+<type>(NN-section): short description in english
+```
+
+---
+
+## Ejemplo
+
+```text
+docs(00-governance): add definition of ready
+```
+
+---
+
+# Tipos permitidos
+
+| Tipo       | Uso                                                 |
+| ---------- | --------------------------------------------------- |
+| `docs`     | Crear o actualizar documentación                    |
+| `fix`      | Corregir contenido incorrecto                       |
+| `chore`    | Reorganizar, mover o renombrar archivos             |
+| `refactor` | Reestructurar documentación sin cambiar significado |
+
+---
+
+## Tipos no permitidos
+
+No utilizar:
+
+```text
+feat
+style
+test
+perf
+build
+ci
+```
+
+Este repositorio es exclusivamente documental.
+
+---
+
+# Ejemplos válidos
+
+```bash
+docs(00-governance): add definition of done
+
+docs(01-product): create project vision
+
+docs(05-architecture): define service boundaries
+
+docs(09-microservices): register scheduling service
+
+fix(09-microservices): correct service ownership
+
+chore(08-uml): reorganize diagram exports
+
+refactor(00-governance): split governance documents
+```
+
+---
+
+# Reglas para commits
+
+* La descripción debe escribirse en inglés.
+* El contenido de los documentos puede estar en español.
+* Un commit debe representar un cambio lógico único.
+* Evitar commits masivos sin contexto.
+* Evitar mezclar múltiples secciones en un mismo commit.
+* Mantener trazabilidad por Historia de Usuario.
+* Realizar commits frecuentes y descriptivos.
+
+---
+
+# Pull Requests
+
+Todo Pull Request debe:
+
+* Tener un título descriptivo.
+* Referenciar la Historia de Usuario asociada.
+* Incluir descripción de cambios.
+* Cumplir el Definition of Ready.
+* Cumplir el Definition of Done.
+* Ser aprobado por al menos un integrante distinto al autor.
+
+---
+
+# Buenas prácticas
+
+* Mantener ramas actualizadas.
+* Resolver conflictos antes de crear Pull Request.
+* Utilizar nombres descriptivos.
+* Mantener trazabilidad entre documentos y commits.
+* Evitar trabajo directo sobre ramas protegidas.
+* Mantener commits pequeños y comprensibles.
+
+---
+
+# Flujo resumido
+
+```text
+hu-xx-rh-descripcion
+ ↓
+Pull Request
+ ↓
+develop
+ ↓
+hu-xx-rh-descripcion
+ ↓
+qa
+ ↓
+hu-xx-rh-descripcion
+ ↓
+staging
+ ↓
+release/iteration-xx
+ ↓
+main
+```
+
+---
+
+# Referencias
+
+* `definition-of-ready.md`
+* `definition-of-done.md`
+* `documentation-rules.md`
+* `security-rules.md`
+
+---
+
+# Regla general
+
+> Ningún cambio podrá incorporarse a la documentación oficial del Sistema de Gestión de Horarios SENA sin seguir las convenciones de ramas, commits, Pull Requests y promoción entre ambientes definidas en este documento.

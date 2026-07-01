@@ -16,26 +16,26 @@ Este repositorio es la fuente de verdad documental del proyecto. Todo cambio deb
 
 | Sección | Descripción | Estado |
 |---------|-------------|--------|
-| [00-governance](./00-governance/) | Reglas, convenciones y criterios del repo | 🟡 |
-| [01-context](./01-context/) | Contexto institucional, alcance y glosario | 🔴 |
-| [02-domain](./02-domain/) | Modelo de dominio y bounded contexts | 🔴 |
-| [03-product](./03-product/) | Visión, roadmap y backlog de producto | 🔴 |
-| [04-requirements](./04-requirements/) | Requisitos funcionales y no funcionales | 🔴 |
-| [05-architecture](./05-architecture/) | Vistas arquitectónicas y ADRs | 🔴 |
-| [06-data](./06-data/) | Modelos de datos y estrategia de migración | 🔴 |
-| [07-api](./07-api/) | Guidelines, autenticación y contratos OpenAPI | 🔴 |
-| [08-uml](./08-uml/) | Diagramas UML (fuentes y exportaciones) | 🔴 |
-| [09-microservices](./09-microservices/) | Catálogo de servicios y plantilla | 🔴 |
-| [10-devops](./10-devops/) | Setup local, CI/CD y entornos | 🔴 |
-| [11-quality](./11-quality/) | Estrategia de testing y code review | 🔴 |
-| [12-ux-ui](./12-ux-ui/) | Design system, navegación y wireframes | 🔴 |
-| [13-operations](./13-operations/) | Observabilidad, incidentes y backups | 🔴 |
-| [14-training](./14-training/) | Manuales de usuario, admin y onboarding | 🔴 |
-| [15-project-control](./15-project-control/) | Backlog técnico, riesgos y dependencias | 🔴 |
+| [00-governance](./00-governance/) | Reglas, convenciones y criterios del repo | 🟢 |
+| [01-context](./01-context/) | Contexto institucional, alcance y glosario | 🟢  |
+| [02-domain](./02-domain/) | Modelo de dominio y bounded contexts | 🟢  |
+| [03-product](./03-product/) | Visión, roadmap y backlog de producto | 🟢  |
+| [04-requirements](./04-requirements/) | Requisitos funcionales y no funcionales | 🟢  |
+| [05-architecture](./05-architecture/) | Vistas arquitectónicas y ADRs | 🟢  |
+| [06-data](./06-data/) | Modelos de datos y estrategia de migración | 🟢  |
+| [07-api](./07-api/) | Guidelines, autenticación y contratos OpenAPI | 🟢  |
+| [08-uml](./08-uml/) | Diagramas UML (fuentes y exportaciones) | 🟢  |
+| [09-microservices](./09-microservices/) | Catálogo de servicios y plantilla | 🟢  |
+| [10-devops](./10-devops/) | Setup local, CI/CD y entornos | 🟢  |
+| [11-quality](./11-quality/) | Estrategia de testing y code review | 🟢  |
+| [12-ux-ui](./12-ux-ui/) | Design system, navegación y wireframes | 🟢  |
+| [13-operations](./13-operations/) | Observabilidad, incidentes y backups | 🟢  |
+| [14-training](./14-training/) | Manuales de usuario, admin y onboarding | 🟢  |
+| [15-project-control](./15-project-control/) | Backlog técnico, riesgos y dependencias | 🟢  |
 | [99-archive](./99-archive/) | Decisiones y documentos deprecados | 🟡 |
 
 ## Estado de íconos
-- 🔴 Pendiente — 🟡 En progreso — 🟢 Estable
+- 🟢  Pendiente — 🟡 En progreso — 🟢 Estable
 - ⚫ Deprecado
 
 ## Documentos de gobierno
